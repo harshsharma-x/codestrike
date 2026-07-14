@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@codestrike/core": ["./packages/core/src"],
+      "@codestrike/ai": ["./packages/ai/src"],
+      "@codestrike/agents": ["./packages/agents/src"],
+      "@codestrike/config": ["./packages/config/src"],
+      "@codestrike/database": ["./packages/database/src"],
+      "@codestrike/terminal": ["./packages/terminal/src"],
+      "@codestrike/git": ["./packages/git/src"],
+      "@codestrike/rag": ["./packages/rag/src"],
+      "@codestrike/ui": ["./packages/ui/src"],
+      "@codestrike/shared": ["./packages/shared/src"],
+      "@codestrike/plugins": ["./packages/plugins/src"],
+      "@codestrike/memory": ["./packages/memory/src"],
+      "@codestrike/tools": ["./packages/tools/src"],
+      "@codestrike/mcp": ["./packages/mcp/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

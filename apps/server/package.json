@@ -1,0 +1,43 @@
+{
+  "name": "@codestrike/server",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs",
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "start": "node dist/index.js",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@codestrike/core": "workspace:*",
+    "@codestrike/ai": "workspace:*",
+    "@codestrike/agents": "workspace:*",
+    "@codestrike/rag": "workspace:*",
+    "@codestrike/git": "workspace:*",
+    "@codestrike/terminal": "workspace:*",
+    "@codestrike/shared": "workspace:*",
+    "@codestrike/database": "workspace:*",
+    "fastify": "^4.26.0",
+    "@fastify/cors": "^9.0.0",
+    "@fastify/websocket": "^10.0.0",
+    "@fastify/rate-limit": "^9.0.0",
+    "@fastify/swagger": "^8.0.0",
+    "@fastify/swagger-ui": "^3.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.2.0",
+    "eslint": "^8.56.0",
+    "@types/node": "^20.11.0",
+    "@types/jsonwebtoken": "^9.0.0"
+  }
+}
