@@ -1,5 +1,5 @@
 {
-  "name": "codestrike",
+  "name": "codestrike-monorepo",
   "version": "0.1.0",
   "private": true,
   "description": "CodeStrike AI - Open-source AI coding agent",

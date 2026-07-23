@@ -29,7 +29,8 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm --filter @codestrike/shared --filter @codestrike/core --filter @codestrike/config --filter @codestrike/terminal --filter @codestrike/git --filter @codestrike/tools --filter @codestrike/plugins --filter @codestrike/memory --filter @codestrike/rag --filter @codestrike/ai --filter @codestrike/agents --filter codestrike --filter @codestrike/database --filter @codestrike/server run typecheck
+      - run: pnpm --filter @codestrike/shared --filter @codestrike/core --filter @codestrike/config --filter @codestrike/terminal --filter @codestrike/git --filter @codestrike/tools --filter @codestrike/plugins --filter @codestrike/memory --filter @codestrike/rag --filter @codestrike/ai --filter @codestrike/agents --filter @codestrike/database --filter @codestrike/server run typecheck
+      - run: cd apps/cli && pnpm run typecheck
 
   test:
     runs-on: ubuntu-latest
