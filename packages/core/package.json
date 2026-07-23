@@ -23,7 +23,7 @@
   "dependencies": {
     "@codestrike/shared": "workspace:*",
     "zod": "^3.22.0",
-    "nanoid": "^5.0.0"
+    "nanoid": "^6.0.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
