@@ -1,7 +1,6 @@
 declare module 'inquirer' {
-  interface Inquirer {
-    prompt<T>(questions: any): Promise<T>;
-  }
-  const inquirer: Inquirer;
+  const inquirer: {
+    prompt(questions: any): Promise<Record<string, any>>;
+  };
   export default inquirer;
 }
