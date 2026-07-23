@@ -5,6 +5,7 @@
   "description": "CodeStrike AI - Open-source AI coding agent",
   "license": "MIT",
   "author": "CodeStrike AI",
+  "packageManager": "pnpm@11.15.1",
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
@@ -30,10 +31,6 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "dependencies": {
     "axios": "^1.18.1",
     "execa": "^9.6.1",

@@ -17,3 +17,4 @@ debug/
 *.sqlite
 :memory:
 *.zip
+package-lock.json
