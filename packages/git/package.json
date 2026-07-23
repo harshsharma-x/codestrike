@@ -23,7 +23,7 @@
   "dependencies": {
     "@codestrike/core": "workspace:*",
     "@codestrike/shared": "workspace:*",
-    "execa": "^8.0.0"
+    "execa": "^10.0.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
