@@ -46,7 +46,7 @@ export async function gitRoutes(server: FastifyInstance) {
     }
   });
 
-  server.get('/diff', async (request) => {
+  server.get('/diff', async (request, reply) => {
     const { ref1, ref2 } = request.query as { ref1?: string; ref2?: string };
     const git = new GitService();
 
@@ -61,7 +61,7 @@ export async function gitRoutes(server: FastifyInstance) {
     }
   });
 
-  server.get('/log', async (request) => {
+  server.get('/log', async (request, reply) => {
     const { count } = request.query as { count?: string };
     const git = new GitService();
 

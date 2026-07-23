@@ -7,7 +7,7 @@ export async function terminalWsRoutes(server: FastifyInstance) {
   server.get('/terminal', { websocket: true }, (socket, req) => {
     const cwd = (req.query as { cwd?: string }).cwd || process.cwd();
 
-    socket.on('message', async (rawData) => {
+    socket.on('message', async (rawData: unknown) => {
       try {
         const { command, id } = JSON.parse(rawData.toString());
 

@@ -1,8 +1,7 @@
 declare module 'inquirer' {
-  interface PromptModule {
+  interface Inquirer {
     prompt<T>(questions: any): Promise<T>;
-    register(name: string, prompt: any): void;
   }
-  const prompt: PromptModule['prompt'];
-  export default prompt;
+  const inquirer: Inquirer;
+  export default inquirer;
 }
