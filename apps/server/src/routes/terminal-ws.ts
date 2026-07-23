@@ -9,7 +9,7 @@ export async function terminalWsRoutes(server: FastifyInstance) {
 
     socket.on('message', async (rawData: unknown) => {
       try {
-        const { command, id } = JSON.parse(rawData.toString());
+        const { command, id } = JSON.parse(String(rawData));
 
         if (!command) return;
 
