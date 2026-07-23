@@ -19,6 +19,7 @@ Or via npm:
 
 ```bash
 npm install -g codestrike
+npx codestrike init  # run without install
 ```
 
 ## Quick Start
@@ -48,54 +49,54 @@ codestrike chat "Explain this code"  # Start a chat
 
 ## CLI Commands (25 + 4 subcommands)
 
-| Command | Description |
-|---------|-------------|
-| `init` | Initialize CodeStrike in project |
-| `chat` | Interactive AI chat session |
-| `models` | List AI models and providers |
-| `doctor` | System health diagnostics |
-| `config` | View/modify configuration |
-| `index` | Index project for AI context |
-| `review` | Code review |
-| `commit` | Generate commit messages |
-| `explain` | Explain code or concepts |
-| `debug` | Debug code or errors |
-| `fix` | Fix bugs in code |
-| `test` | Generate tests |
-| `docs` | Generate documentation |
-| `search` | Semantic code search |
-| `status` | Project status |
-| `run` | Execute terminal commands |
-| `login` | Configure API keys |
-| `terminal` | Integrated terminal |
-| `session` | Manage chat sessions |
-| `providers` | List all AI providers |
-| `agent` | Run specific AI agents |
-| `memory` | View and manage memory |
-| `plugins` | Manage plugins |
-| `update` | Check for updates |
-| `mcp` | Manage MCP servers (list/add/remove/test) |
+| Command     | Description                               |
+| ----------- | ----------------------------------------- |
+| `init`      | Initialize CodeStrike in project          |
+| `chat`      | Interactive AI chat session               |
+| `models`    | List AI models and providers              |
+| `doctor`    | System health diagnostics                 |
+| `config`    | View/modify configuration                 |
+| `index`     | Index project for AI context              |
+| `review`    | Code review                               |
+| `commit`    | Generate commit messages                  |
+| `explain`   | Explain code or concepts                  |
+| `debug`     | Debug code or errors                      |
+| `fix`       | Fix bugs in code                          |
+| `test`      | Generate tests                            |
+| `docs`      | Generate documentation                    |
+| `search`    | Semantic code search                      |
+| `status`    | Project status                            |
+| `run`       | Execute terminal commands                 |
+| `login`     | Configure API keys                        |
+| `terminal`  | Integrated terminal                       |
+| `session`   | Manage chat sessions                      |
+| `providers` | List all AI providers                     |
+| `agent`     | Run specific AI agents                    |
+| `memory`    | View and manage memory                    |
+| `plugins`   | Manage plugins                            |
+| `update`    | Check for updates                         |
+| `mcp`       | Manage MCP servers (list/add/remove/test) |
 
 ## AI Providers
 
-| Provider | Type | Default Model | Env Variable |
-|----------|------|---------------|--------------|
-| OpenRouter | Free | mistralai/mixtral-8x7b-instruct | `OPENROUTER_API_KEY` |
-| Groq | Free | mixtral-8x7b-32768 | `GROQ_API_KEY` |
-| Hugging Face | Free | mistralai/Mixtral-8x7B-Instruct-v0.1 | `HUGGINGFACE_API_KEY` |
-| Ollama | Free (local) | codellama | None |
-| LM Studio | Free (local) | local-model | None |
-| DeepSeek | Paid | deepseek-v4-flash | `DEEPSEEK_API_KEY` |
-| OpenAI | Paid | gpt-4o | `OPENAI_API_KEY` |
-| Anthropic | Paid | claude-sonnet-4-20250514 | `ANTHROPIC_API_KEY` |
-| Gemini | Free | gemini-2.5-flash | `GEMINI_API_KEY` |
-| Mistral | Paid | mistral-large-2501 | `MISTRAL_API_KEY` |
-| Together AI | Paid | mistralai/Mixtral-8x7B-Instruct-v0.1 | `TOGETHER_AI_API_KEY` |
-| Cerebras | Paid | llama3.1-8b | `CEREBRAS_API_KEY` |
-| Fireworks AI | Paid | llama-v3p1-405b-instruct | `FIREWORKS_AI_API_KEY` |
-| xAI | Paid | grok-3 | `XAI_API_KEY` |
-| NVIDIA Nemotron | Free | nvidia/llama-3.1-nemotron-70b-instruct | `NVIDIA_NEMOTRON_API_KEY` |
-| Local GGUF | Free (local) | local-model | `LOCAL_GGUF_API_KEY` |
+| Provider        | Type         | Default Model                          | Env Variable          |
+| --------------- | ------------ | -------------------------------------- | --------------------- |
+| OpenRouter      | Free         | mistralai/mixtral-8x7b-instruct        | `OPENROUTER_API_KEY`  |
+| Groq            | Free         | mixtral-8x7b-32768                     | `GROQ_API_KEY`        |
+| Hugging Face    | Free         | mistralai/Mixtral-8x7B-Instruct-v0.1   | `HUGGINGFACE_API_KEY` |
+| Ollama          | Free (local) | codellama                              | None                  |
+| LM Studio       | Free (local) | local-model                            | None                  |
+| DeepSeek        | Paid         | deepseek-v4-flash                      | `DEEPSEEK_API_KEY`    |
+| OpenAI          | Paid         | gpt-4o                                 | `OPENAI_API_KEY`      |
+| Anthropic       | Paid         | claude-sonnet-4-20250514               | `ANTHROPIC_API_KEY`   |
+| Gemini          | Free         | gemini-2.5-flash                       | `GEMINI_API_KEY`      |
+| Mistral         | Paid         | mistral-large-2501                     | `MISTRAL_API_KEY`     |
+| Together AI     | Paid         | mistralai/Mixtral-8x7B-Instruct-v0.1   | `TOGETHER_API_KEY`    |
+| Cerebras        | Paid         | llama3.1-8b                            | `CEREBRAS_API_KEY`    |
+| Fireworks AI    | Paid         | llama-v3p1-405b-instruct               | `FIREWORKS_API_KEY`   |
+| xAI             | Paid         | grok-3                                 | `XAI_API_KEY`         |
+| NVIDIA Nemotron | Free         | nvidia/llama-3.1-nemotron-70b-instruct | `NVIDIA_API_KEY`      |
+| Local GGUF      | Free (local) | local-model                            | None                  |
 
 ## Architecture
 
@@ -143,20 +144,20 @@ Or use `codestrike login` for interactive setup.
 ```bash
 git clone https://github.com/harshsharma-x/codestrike.git
 cd codestrike
-npm install
-npm run build
-npm test                 # 130 tests across 21 suites
-npm run dev              # Development mode
+pnpm install
+pnpm build
+pnpm test                # 130+ tests across 21+ suites
+pnpm dev                 # Development mode (all workspaces)
 ```
 
 ### Quick Start (2-terminal dev)
 
 ```bash
 # Terminal 1 — Server
-cd apps/server && npm run dev
+cd apps/server && pnpm dev
 
 # Terminal 2 — Web
-cd apps/web && npx next dev
+cd apps/web && pnpm dev
 ```
 
 Then open http://localhost:3000 or http://localhost:4000/docs for the Swagger API browser.
