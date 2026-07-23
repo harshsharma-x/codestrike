@@ -83,7 +83,7 @@ export class AIRouter {
 
   async completeWithTools(req: AICompletionRequest): Promise<AICompletionResponse> {
     const mcpTools = req.useMcp ? await this.loadMCPTools() : [];
-    let messages = [...req.messages];
+    const messages = [...req.messages];
     const maxTurns = 5;
 
     for (let turn = 0; turn < maxTurns; turn++) {
@@ -110,7 +110,7 @@ export class AIRouter {
 
   async *streamWithTools(req: AICompletionRequest): AsyncGenerator<AIStreamChunk> {
     const mcpTools = req.useMcp ? await this.loadMCPTools() : [];
-    let messages = [...req.messages];
+    const messages = [...req.messages];
     const maxTurns = 5;
 
     for (let turn = 0; turn < maxTurns; turn++) {

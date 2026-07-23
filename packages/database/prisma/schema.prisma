@@ -81,7 +81,7 @@ model Index {
   summary     String
   language    String
   tokens      Int
-  embeddings  Float[]?
+  embeddings  Json?
   lastIndexed DateTime @default(now())
   project     Project  @relation(fields: [projectId], references: [id])
 
