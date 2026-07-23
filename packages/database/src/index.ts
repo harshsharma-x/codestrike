@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
 
@@ -103,7 +103,7 @@ export async function createMessage(data: {
   tokens?: number;
   metadata?: Record<string, unknown>;
 }) {
-  return prisma.message.create({ data: { ...data, metadata: data.metadata ?? undefined } });
+  return prisma.message.create({ data: { ...data, metadata: (data.metadata ?? undefined) as Prisma.InputJsonValue } });
 }
 
 export async function getMessagesByConversationId(conversationId: string) {
