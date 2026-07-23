@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { createRouter } from '@codestrike/ai';
 import { readFileSync, existsSync } from 'fs';
+import { getDefaultModel, getDefaultProvider } from '../utils';
 
 export const explainCommand = new Command('explain')
   .description('Explain code or concepts')
@@ -21,7 +22,11 @@ export const explainCommand = new Command('explain')
     }
 
     if (!content) {
-      console.log(chalk.yellow('No code provided. Use forge explain "your code" or forge explain --file path/to/file'));
+      console.log(
+        chalk.yellow(
+          'No code provided. Use forge explain "your code" or forge explain --file path/to/file',
+        ),
+      );
       return;
     }
 
@@ -32,12 +37,13 @@ export const explainCommand = new Command('explain')
         messages: [
           {
             role: 'system',
-            content: 'You are an expert programmer. Explain the given code in detail, covering what it does, how it works, and any notable patterns or potential issues.',
+            content:
+              'You are an expert programmer. Explain the given code in detail, covering what it does, how it works, and any notable patterns or potential issues.',
           },
           { role: 'user', content: `Explain this code:\n\n${content.slice(0, 8000)}` },
         ],
-        model: 'mistralai/mixtral-8x7b-instruct',
-        provider: 'openrouter',
+        model: getDefaultModel(),
+        provider: getDefaultProvider(),
         stream: false,
       });
 

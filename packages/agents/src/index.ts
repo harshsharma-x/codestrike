@@ -10,3 +10,4 @@ export * from './agents/testing';
 export * from './agents/git';
 export * from './agents/deployment';
 export * from './orchestrator';
+export * from './pipeline';

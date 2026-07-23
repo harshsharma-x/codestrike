@@ -1,12 +1,9 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { createRouter } from '@codestrike/ai';
-import { ProviderRegistry } from '@codestrike/ai';
-import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
-import { AgentOrchestrator } from '@codestrike/agents';
+import { getDefaultProvider, getDefaultModel } from '../utils';
+import { existsSync } from 'fs';
 import { ProjectIndexer } from '@codestrike/rag';
-import { Logger } from '@codestrike/core';
 
 export const chatCommand = new Command('chat')
   .description('Start an interactive AI chat session')
@@ -16,7 +13,7 @@ export const chatCommand = new Command('chat')
   .option('--no-index', 'Skip project indexing')
   .action(async (message, options) => {
     const router = createRouter({
-      primaryProvider: options.provider as any || 'openrouter',
+      primaryProvider: (options.provider as any) || getDefaultProvider(),
     });
     const orchestrator = new AgentOrchestrator(router);
     const indexer = new ProjectIndexer();
@@ -47,12 +44,17 @@ export const chatCommand = new Command('chat')
       try {
         const response = await router.complete({
           messages: [
-            { role: 'system' as const, content: 'You are CodeStrike AI, a helpful coding assistant.' },
-            ...(projectContext ? [{ role: 'system' as const, content: `Project structure:\n${projectContext}` }] : []),
+            {
+              role: 'system' as const,
+              content: 'You are CodeStrike AI, a helpful coding assistant.',
+            },
+            ...(projectContext
+              ? [{ role: 'system' as const, content: `Project structure:\n${projectContext}` }]
+              : []),
             { role: 'user' as const, content: message },
           ],
-          model: options.model || 'mistralai/mixtral-8x7b-instruct',
-          provider: options.provider as any || 'openrouter',
+          model: options.model || getDefaultModel(),
+          provider: (options.provider as any) || getDefaultProvider(),
           stream: false,
         });
 
@@ -61,7 +63,9 @@ export const chatCommand = new Command('chat')
         console.log(response.content);
         console.log();
       } catch (error) {
-        spinner.fail(chalk.red('Error: ' + (error instanceof Error ? error.message : 'Unknown error')));
+        spinner.fail(
+          chalk.red('Error: ' + (error instanceof Error ? error.message : 'Unknown error')),
+        );
       }
       return;
     }
@@ -133,20 +137,31 @@ export const chatCommand = new Command('chat')
       const spinner = (await import('ora')).default('Thinking...').start();
 
       try {
-        const messages: { role: 'system' | 'user' | 'assistant' | 'tool'; content: string; toolCallId?: string }[] = [
-          { role: 'system', content: 'You are CodeStrike AI, a helpful coding assistant. Provide clear, concise answers.' },
+        const messages: {
+          role: 'system' | 'user' | 'assistant' | 'tool';
+          content: string;
+          toolCallId?: string;
+        }[] = [
+          {
+            role: 'system',
+            content:
+              'You are CodeStrike AI, a helpful coding assistant. Provide clear, concise answers.',
+          },
         ];
 
         if (projectContext) {
-          messages.push({ role: 'system' as const, content: `Current project:\n${projectContext}` });
+          messages.push({
+            role: 'system' as const,
+            content: `Current project:\n${projectContext}`,
+          });
         }
 
         messages.push({ role: 'user' as const, content: input });
 
         const response = await router.complete({
           messages,
-          model: options.model || 'mistralai/mixtral-8x7b-instruct',
-          provider: options.provider as any || 'openrouter',
+          model: options.model || getDefaultModel(),
+          provider: (options.provider as any) || getDefaultProvider(),
           stream: false,
         });
 
@@ -155,7 +170,9 @@ export const chatCommand = new Command('chat')
         console.log(response.content);
         console.log();
       } catch (error) {
-        spinner.fail(chalk.red('Error: ' + (error instanceof Error ? error.message : 'Unknown error')));
+        spinner.fail(
+          chalk.red('Error: ' + (error instanceof Error ? error.message : 'Unknown error')),
+        );
       }
 
       rl.prompt();

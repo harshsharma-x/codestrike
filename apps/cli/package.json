@@ -34,7 +34,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node scripts/postbuild.mjs",
     "dev": "tsup --watch",
     "start": "node dist/index.cjs",
     "lint": "eslint src/",
@@ -60,6 +60,7 @@
     "@codestrike/terminal": "workspace:*",
     "@codestrike/shared": "workspace:*",
     "@codestrike/memory": "workspace:*",
+    "@codestrike/mcp": "workspace:*",
     "@codestrike/plugins": "workspace:*",
     "@codestrike/tools": "workspace:*",
     "tsup": "^8.0.0",

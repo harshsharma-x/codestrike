@@ -179,6 +179,126 @@ export interface ProjectIndex {
   error?: string;
 }
 
+export interface PipelineStep {
+  id: string;
+  agentRole: AgentRole;
+  prompt: string;
+  context?: string;
+  dependsOn?: string[];
+}
+
+export interface Pipeline {
+  id: string;
+  name: string;
+  description: string;
+  steps: PipelineStep[];
+  createdAt: number;
+}
+
+export interface PipelineTemplate {
+  name: string;
+  description: string;
+  steps: { agentRole: AgentRole; prompt: string; dependsOn?: string[] }[];
+}
+
+export const PIPELINE_TEMPLATES: Record<string, PipelineTemplate> = {
+  'secure-feature': {
+    name: 'Secure Feature',
+    description: 'Architect → Code → Security review → Deploy',
+    steps: [
+      { agentRole: 'architect', prompt: 'Design the architecture for: {{task}}' },
+      {
+        agentRole: 'coder',
+        prompt: 'Implement the following architecture design:\n{{previous}}',
+        dependsOn: ['step-0'],
+      },
+      {
+        agentRole: 'security',
+        prompt: 'Review the following code for security vulnerabilities:\n{{previous}}',
+        dependsOn: ['step-1'],
+      },
+      {
+        agentRole: 'deployment',
+        prompt: 'Create deployment configuration for:\n{{previous}}',
+        dependsOn: ['step-2'],
+      },
+    ],
+  },
+  'full-review': {
+    name: 'Full Review',
+    description: 'Review → Security audit → Documentation → Testing',
+    steps: [
+      { agentRole: 'reviewer', prompt: 'Review the following code:\n{{task}}' },
+      {
+        agentRole: 'security',
+        prompt: 'Audit the following for security issues:\n{{previous}}',
+        dependsOn: ['step-0'],
+      },
+      {
+        agentRole: 'documentation',
+        prompt: 'Generate documentation for:\n{{previous}}',
+        dependsOn: ['step-0', 'step-1'],
+      },
+      {
+        agentRole: 'testing',
+        prompt: 'Generate test plan and tests for:\n{{previous}}',
+        dependsOn: ['step-0', 'step-1'],
+      },
+    ],
+  },
+  'debug-triage': {
+    name: 'Debug Triage',
+    description: 'Debug → Fix → Test',
+    steps: [
+      { agentRole: 'debugger', prompt: 'Debug the following issue:\n{{task}}' },
+      {
+        agentRole: 'coder',
+        prompt: 'Fix the bug identified:\n{{previous}}',
+        dependsOn: ['step-0'],
+      },
+      {
+        agentRole: 'testing',
+        prompt: 'Verify the fix with tests:\n{{previous}}',
+        dependsOn: ['step-1'],
+      },
+    ],
+  },
+  'docs-gen': {
+    name: 'Documentation Generation',
+    description: 'Read code → Document → Review docs',
+    steps: [
+      { agentRole: 'documentation', prompt: 'Generate documentation for:\n{{task}}' },
+      {
+        agentRole: 'reviewer',
+        prompt: 'Review the following documentation for accuracy:\n{{previous}}',
+        dependsOn: ['step-0'],
+      },
+    ],
+  },
+  'code-to-deploy': {
+    name: 'Code to Deploy',
+    description: 'Plan → Code → Review → Deploy',
+    steps: [
+      { agentRole: 'planner', prompt: 'Create a plan for: {{task}}' },
+      {
+        agentRole: 'coder',
+        prompt: 'Implement based on this plan:\n{{previous}}',
+        dependsOn: ['step-0'],
+      },
+      {
+        agentRole: 'reviewer',
+        prompt: 'Review the implementation:\n{{previous}}',
+        dependsOn: ['step-1'],
+      },
+      {
+        agentRole: 'deployment',
+        prompt: 'Configure deployment for:\n{{previous}}',
+        dependsOn: ['step-2'],
+      },
+    ],
+  },
+};
+
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 export type ThemeMode = 'dark' | 'light' | 'system';
 export type CommandStatus = 'idle' | 'running' | 'success' | 'error' | 'cancelled';

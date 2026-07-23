@@ -1,11 +1,23 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
-import { createRouter, ProviderRegistry } from '@codestrike/ai';
+import { createRouter } from '@codestrike/ai';
 import { AgentOrchestrator } from '@codestrike/agents';
 import { AgentRole } from '@codestrike/shared';
 import ora from 'ora';
+import { getDefaultProvider } from '../utils';
 
-const VALID_TYPES: AgentRole[] = ['planner', 'architect', 'coder', 'reviewer', 'debugger', 'security', 'documentation', 'testing', 'git', 'deployment'];
+const VALID_TYPES: AgentRole[] = [
+  'planner',
+  'architect',
+  'coder',
+  'reviewer',
+  'debugger',
+  'security',
+  'documentation',
+  'testing',
+  'git',
+  'deployment',
+];
 
 export const agentCommand = new Command('agent')
   .description('Run specific AI agents')
@@ -20,7 +32,9 @@ export const agentCommand = new Command('agent')
     }
 
     if (!VALID_TYPES.includes(type as AgentRole)) {
-      console.log(chalk.red(`\n  Invalid agent type: ${type}\n  Valid types: ${VALID_TYPES.join(', ')}\n`));
+      console.log(
+        chalk.red(`\n  Invalid agent type: ${type}\n  Valid types: ${VALID_TYPES.join(', ')}\n`),
+      );
       return;
     }
 
@@ -28,7 +42,7 @@ export const agentCommand = new Command('agent')
 
     try {
       const router = createRouter({
-        primaryProvider: (options.provider as any) || 'openrouter',
+        primaryProvider: (options.provider as any) || getDefaultProvider(),
       });
       const orchestrator = new AgentOrchestrator(router);
 
@@ -54,6 +68,8 @@ export const agentCommand = new Command('agent')
       console.log();
     } catch (error) {
       spinner.stop();
-      console.log(chalk.red(`\n  Error: ${error instanceof Error ? error.message : String(error)}\n`));
+      console.log(
+        chalk.red(`\n  Error: ${error instanceof Error ? error.message : String(error)}\n`),
+      );
     }
   });

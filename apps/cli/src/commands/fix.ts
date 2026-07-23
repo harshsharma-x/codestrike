@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { createRouter } from '@codestrike/ai';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { getDefaultModel, getDefaultProvider } from '../utils';
 
 export const fixCommand = new Command('fix')
   .description('Fix bugs or issues in code')
@@ -28,12 +29,13 @@ export const fixCommand = new Command('fix')
         messages: [
           {
             role: 'system',
-            content: 'You are a code fixing assistant. Analyze the code, identify bugs, and provide the fixed version. Output the complete fixed file content.',
+            content:
+              'You are a code fixing assistant. Analyze the code, identify bugs, and provide the fixed version. Output the complete fixed file content.',
           },
           { role: 'user', content: prompt },
         ],
-        model: 'mistralai/mixtral-8x7b-instruct',
-        provider: 'openrouter',
+        model: getDefaultModel(),
+        provider: getDefaultProvider(),
         stream: false,
       });
 

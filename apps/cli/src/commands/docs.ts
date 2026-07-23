@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { createRouter } from '@codestrike/ai';
 import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import { getDefaultModel, getDefaultProvider } from '../utils';
 
 export const docsCommand = new Command('docs')
   .description('Generate documentation')
@@ -47,9 +47,11 @@ export const docsCommand = new Command('docs')
 
     try {
       const typePrompts: Record<string, string> = {
-        readme: 'Generate a comprehensive README.md for this project covering: description, installation, usage, API, configuration, and contributing.',
+        readme:
+          'Generate a comprehensive README.md for this project covering: description, installation, usage, API, configuration, and contributing.',
         api: 'Generate API documentation covering all endpoints, parameters, return types, and examples.',
-        inline: 'Generate inline code documentation with JSDoc/TSDoc comments for all functions and classes.',
+        inline:
+          'Generate inline code documentation with JSDoc/TSDoc comments for all functions and classes.',
       };
 
       const response = await router.complete({
@@ -60,13 +62,17 @@ export const docsCommand = new Command('docs')
           },
           { role: 'user', content: `Generate documentation for:\n\n${context.slice(0, 8000)}` },
         ],
-        model: 'mistralai/mixtral-8x7b-instruct',
-        provider: 'openrouter',
+        model: getDefaultModel(),
+        provider: getDefaultProvider(),
         stream: false,
       });
 
       spinner.stop();
-      console.log(chalk.cyan(`\n  ${options.type.charAt(0).toUpperCase() + options.type.slice(1)} Documentation:\n`));
+      console.log(
+        chalk.cyan(
+          `\n  ${options.type.charAt(0).toUpperCase() + options.type.slice(1)} Documentation:\n`,
+        ),
+      );
       console.log(response.content);
       console.log();
     } catch (error) {

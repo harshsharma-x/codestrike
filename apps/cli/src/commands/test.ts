@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { createRouter } from '@codestrike/ai';
 import { readFileSync, existsSync } from 'fs';
+import { getDefaultModel, getDefaultProvider } from '../utils';
 
 export const testCommand = new Command('test')
   .description('Generate tests for code')
@@ -28,8 +29,8 @@ export const testCommand = new Command('test')
           },
           { role: 'user', content: `Generate tests for this code:\n\n\`\`\`\n${content}\n\`\`\`` },
         ],
-        model: 'mistralai/mixtral-8x7b-instruct',
-        provider: 'openrouter',
+        model: getDefaultModel(),
+        provider: getDefaultProvider(),
         stream: false,
       });
 

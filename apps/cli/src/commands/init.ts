@@ -23,9 +23,16 @@ export const initCommand = new Command('init')
       const config = {
         name: process.cwd().split('/').pop() || 'my-project',
         rootDir: cwd,
-        model: 'mistralai/mixtral-8x7b-instruct',
-        provider: 'openrouter',
-        ignorePatterns: ['node_modules/**', '.git/**', 'dist/**', 'build/**', '.next/**', 'coverage/**'],
+        model: process.env.CODESTRIKE_DEFAULT_MODEL || 'mistralai/mixtral-8x7b-instruct',
+        provider: process.env.CODESTRIKE_DEFAULT_PROVIDER || 'openrouter',
+        ignorePatterns: [
+          'node_modules/**',
+          '.git/**',
+          'dist/**',
+          'build/**',
+          '.next/**',
+          'coverage/**',
+        ],
         temperature: 0.7,
         maxTokens: 4096,
       };

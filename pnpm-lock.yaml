@@ -72,6 +72,9 @@ importers:
       '@codestrike/git':
         specifier: workspace:*
         version: link:../../packages/git
+      '@codestrike/mcp':
+        specifier: workspace:*
+        version: link:../../packages/mcp
       '@codestrike/memory':
         specifier: workspace:*
         version: link:../../packages/memory
