@@ -2,7 +2,7 @@ export const CODESTRIKE_VERSION = '0.1.0';
 
 export const DEFAULT_SYSTEM_PROMPT = `You are CodeStrike AI, an expert programming assistant integrated into the user's terminal and IDE. You help with coding tasks including writing, debugging, refactoring, explaining, and reviewing code. You can operate across entire projects, understand repository structure, and make file changes.`;
 
-export const PROVIDER_INFO: Record<string, { name: string; baseUrl: string; defaultModel: string; free: boolean }> = {
+export const PROVIDER_INFO: Record<string, { name: string; baseUrl: string; defaultModel: string; free: boolean; envKey?: string }> = {
   openrouter: {
     name: 'OpenRouter',
     baseUrl: 'https://openrouter.ai/api/v1',

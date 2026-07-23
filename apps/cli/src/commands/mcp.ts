@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { MCPRegistry } from '@codestrike/mcp';
 import { MCPServerConfigSchema } from '@codestrike/core';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { join } from 'os';
+import { join } from 'path';
 import { homedir } from 'os';
 
 function getConfigPath(): string {

@@ -47,9 +47,9 @@ export const chatCommand = new Command('chat')
       try {
         const response = await router.complete({
           messages: [
-            { role: 'system', content: 'You are CodeStrike AI, a helpful coding assistant.' },
-            ...(projectContext ? [{ role: 'system', content: `Project structure:\n${projectContext}` }] : []),
-            { role: 'user', content: message },
+            { role: 'system' as const, content: 'You are CodeStrike AI, a helpful coding assistant.' },
+            ...(projectContext ? [{ role: 'system' as const, content: `Project structure:\n${projectContext}` }] : []),
+            { role: 'user' as const, content: message },
           ],
           model: options.model || 'mistralai/mixtral-8x7b-instruct',
           provider: options.provider as any || 'openrouter',
@@ -133,8 +133,8 @@ export const chatCommand = new Command('chat')
       const spinner = (await import('ora')).default('Thinking...').start();
 
       try {
-        const messages = [
-          { role: 'system' as const, content: 'You are CodeStrike AI, a helpful coding assistant. Provide clear, concise answers.' },
+        const messages: { role: 'system' | 'user' | 'assistant' | 'tool'; content: string; toolCallId?: string }[] = [
+          { role: 'system', content: 'You are CodeStrike AI, a helpful coding assistant. Provide clear, concise answers.' },
         ];
 
         if (projectContext) {
