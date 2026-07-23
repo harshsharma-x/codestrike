@@ -4,9 +4,9 @@
   "description": "CodeStrike AI - Open-source AI coding agent CLI",
   "license": "MIT",
   "author": "CodeStrike AI",
-  "type": "module",
+  "type": "commonjs",
   "bin": {
-    "codestrike": "./dist/index.cjs"
+    "codestrike": "dist/index.cjs"
   },
   "files": [
     "dist"
