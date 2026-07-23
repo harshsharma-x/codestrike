@@ -1,6 +1,6 @@
 import { readFile } from 'fs/promises';
 import { statSync, existsSync } from 'fs';
-import { join, relative } from 'path';
+import { join } from 'path';
 import fg from 'fast-glob';
 import ignore from 'ignore';
 import { IndexEntry, DEFAULT_IGNORE_PATTERNS, MAX_FILE_SIZE } from '@codestrike/shared';
@@ -69,7 +69,7 @@ export class ProjectIndexer {
         const chunks = chunkContent(content, file);
 
         const entry: IndexEntry = {
-          id: file.replace(/[\/\\]/g, '-'),
+          id: file.replace(/[/\\]/g, '-'),
           path: file,
           content,
           summary: parsed.summary,

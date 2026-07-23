@@ -9,7 +9,7 @@
     "build": "tsup src/index.ts --format esm,cjs",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "lint": "eslint src/",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "prisma generate && tsc --noEmit",
     "test": "vitest run",
     "clean": "rm -rf dist",
     "db:generate": "prisma generate",
