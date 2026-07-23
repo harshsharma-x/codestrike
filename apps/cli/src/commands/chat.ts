@@ -20,6 +20,28 @@ import {
 } from '../utils/session';
 import { PROVIDER_INFO } from '@codestrike/shared';
 
+function resolveVersion(): string {
+  const searchDirs = [__dirname];
+  let d = __dirname;
+  for (let i = 0; i < 5; i++) {
+    const parent = join(d, '..');
+    if (parent === d) break;
+    searchDirs.push(parent);
+    d = parent;
+  }
+  for (const dir of searchDirs) {
+    try {
+      const p = join(dir, 'package.json');
+      const v = JSON.parse(readFileSync(p, 'utf-8')).version;
+      if (v) return v;
+    } catch {
+      /* skip */
+    }
+  }
+  return '0.1.0';
+}
+const PKG_VERSION = resolveVersion();
+
 interface Ctx {
   router: ReturnType<typeof createRouter>;
   model: string;
@@ -1053,7 +1075,9 @@ export const chatCommand = new Command('chat')
 
     if (message) {
       const tui = new TUI();
+      tui.setVersion(PKG_VERSION);
       tui.init();
+      tui.setVersion(PKG_VERSION);
       try {
         session.messages.push({ role: 'user', content: message });
         tui.addMessage({ role: 'user', content: message });
@@ -1068,8 +1092,10 @@ export const chatCommand = new Command('chat')
     }
 
     const tui = new TUI();
+    tui.setVersion(PKG_VERSION);
     try {
       tui.init();
+      tui.setVersion(PKG_VERSION);
       await chatLoop(tui, session, ctx);
     } finally {
       tui.destroy();

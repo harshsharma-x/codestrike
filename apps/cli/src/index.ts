@@ -31,8 +31,10 @@ import { mcpCommand } from './commands/mcp';
 import { benchmarkCommand } from './commands/benchmark';
 import { pipelineCommand } from './commands/pipeline';
 import { autoDetectCommand } from './commands/auto-detect';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
-const pkgVersion = '0.1.0';
+const pkgVersion = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf-8')).version;
 
 const program = new Command();
 

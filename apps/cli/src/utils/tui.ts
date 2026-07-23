@@ -26,6 +26,7 @@ export class TUI {
   private tabIndex = -1;
   private tabPrefix = '';
   private busy = false;
+  private version = '0.1.0';
   private inputResolve?: (value: string) => void;
   private altScreen = false;
   private rawMode = false;
@@ -142,6 +143,10 @@ export class TUI {
   }
   setStatus(s: string): void {
     this.statusText = s;
+    this.render();
+  }
+  setVersion(v: string): void {
+    this.version = v;
     this.render();
   }
 
@@ -452,7 +457,7 @@ export class TUI {
   }
 
   private renderHeader(): string {
-    const L = chalk.bold.cyan('  ⚡ CodeStrike AI  v0.1.0');
+    const L = chalk.bold.cyan(`  ⚡ CodeStrike AI  v${this.version}`);
     const R = chalk.dim(`session: ${(this.sessionId || 'new').slice(0, 8)}`);
     return L + spaces(this.cols - strip(L).length - strip(R).length) + R;
   }

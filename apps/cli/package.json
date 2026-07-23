@@ -6,7 +6,7 @@
   "author": "CodeStrike AI",
   "type": "commonjs",
   "bin": {
-    "codestrike": "dist/index.cjs"
+    "codestrike": "dist/index.js"
   },
   "files": [
     "dist"
