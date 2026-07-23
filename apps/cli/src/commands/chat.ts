@@ -19,6 +19,7 @@ import {
   generateId,
 } from '../utils/session';
 import { PROVIDER_INFO } from '@codestrike/shared';
+import { getCurrentToken, isSetupComplete, listApiKeys } from '../utils/auth';
 
 function resolveVersion(): string {
   const searchDirs = [__dirname];
@@ -965,12 +966,58 @@ def(
   '[base] [-t|-d|-y]',
 );
 
+// ── Auth commands ──
+def(
+  'auth',
+  async (args, tui) => {
+    const token = getCurrentToken();
+    const keys = listApiKeys().map((k) => k.provider);
+    const lines: string[] = ['**Authentication Status:**\n'];
+    if (token) {
+      lines.push(
+        `  ${chalk.green('✓')} Signed in as **${token.userInfo.name}** (${token.provider})`,
+      );
+      if (token.userInfo.email) lines.push(`  Email: ${token.userInfo.email}`);
+    } else {
+      lines.push(`  Not authenticated.`);
+      lines.push(`  Run \`codestrike auth login github\` or \`codestrike auth login google\``);
+    }
+    lines.push('');
+    lines.push(`**API Keys:** ${keys.length > 0 ? keys.join(', ') : 'None configured'}`);
+    lines.push('');
+    lines.push(`**To manage:** \`codestrike auth status\``);
+    tui.addMessage({ role: 'system', content: lines.join('\n') });
+  },
+  'Show authentication status',
+  'system',
+);
+
+def(
+  'setup',
+  async (args, tui) => {
+    tui.suspend();
+    const { setupCommand } = await import('./setup');
+    await setupCommand.parseAsync(['node', 'setup'], { from: 'user' });
+    tui.resume();
+    if (isSetupComplete()) {
+      tui.addMessage({
+        role: 'system',
+        content: '✓ Setup complete. You can now use all features.',
+      });
+    }
+  },
+  'Run the setup wizard',
+  'system',
+);
+
 // ── Register all command names for tab completion ──
 const COMMAND_NAMES = Object.keys(COMMANDS).sort();
 
 // ── Main loop ──
 async function chatLoop(tui: TUI, session: ChatSession, ctx: Ctx): Promise<void> {
   tui.setCommands(COMMAND_NAMES);
+  const curToken = getCurrentToken();
+  if (curToken) tui.setUserName(curToken.userInfo.name);
   tui.setModel(ctx.model);
   tui.setProvider(ctx.provider);
   tui.setSessionId(session.id);

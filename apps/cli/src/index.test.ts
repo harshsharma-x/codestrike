@@ -32,9 +32,11 @@ describe('CLI', () => {
     'benchmark',
     'pipeline',
     'auto-detect',
+    'setup',
+    'auth',
   ];
 
-  it('should export all 30 commands as Command objects', async () => {
+  it('should export all 32 commands as Command objects', async () => {
     const exportMap: Record<string, string> = {
       'auto-detect': 'autoDetectCommand',
     };
@@ -49,14 +51,14 @@ describe('CLI', () => {
 
   it('should have no duplicate or missing command names', () => {
     const unique = new Set(allCommands);
-    expect(unique.size).toBe(30);
+    expect(unique.size).toBe(32);
   });
 
   it('each command file should be in the index', async () => {
     const exportMap: Record<string, string> = {
       'auto-detect': 'autoDetectCommand',
     };
-    const indexContent = await import(`./index`).catch(() => null);
+    await import(`./index`).catch(() => null);
     for (const name of allCommands) {
       const mod = await import(`./commands/${name}`);
       const cmd = mod[exportMap[name] || `${name}Command`];

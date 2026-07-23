@@ -31,8 +31,11 @@ import { mcpCommand } from './commands/mcp';
 import { benchmarkCommand } from './commands/benchmark';
 import { pipelineCommand } from './commands/pipeline';
 import { autoDetectCommand } from './commands/auto-detect';
+import { setupCommand } from './commands/setup';
+import { authCommand } from './commands/auth';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import { isSetupComplete } from './utils/auth';
 
 const pkgVersion = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf-8')).version;
 
@@ -74,6 +77,8 @@ program.addCommand(mcpCommand);
 program.addCommand(benchmarkCommand);
 program.addCommand(pipelineCommand);
 program.addCommand(autoDetectCommand);
+program.addCommand(setupCommand);
+program.addCommand(authCommand);
 
 program.on('command:*', () => {
   console.error(chalk.red('Invalid command:'), program.args.join(' '));
@@ -82,7 +87,15 @@ program.on('command:*', () => {
 });
 
 if (!process.argv.slice(2).length) {
-  process.argv.push('chat');
+  try {
+    if (!isSetupComplete()) {
+      process.argv.push('setup');
+    } else {
+      process.argv.push('chat');
+    }
+  } catch {
+    process.argv.push('chat');
+  }
 }
 
 program.parse(process.argv);
