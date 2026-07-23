@@ -6,7 +6,7 @@
   "module": "./dist/index.mjs",
   "types": "./src/index.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs",
+    "build": "prisma generate && tsup src/index.ts --format esm,cjs",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "lint": "eslint src/",
     "typecheck": "prisma generate && tsc --noEmit",
