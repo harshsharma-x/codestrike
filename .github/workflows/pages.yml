@@ -27,8 +27,7 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm install --prefix landing
-      - run: pnpm --prefix landing run build
+      - run: pnpm --filter codestrike-landing run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
